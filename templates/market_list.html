@@ -1,0 +1,15 @@
+{% extends "res_list.html" %}
+{% block search %}
+{% endblock %}
+
+{% block table_tr %}
+            <th>市场名称</th>
+            <th>市场地址</th>
+            <th>联系人</th>
+{% endblock %}
+{% block table_td %}
+                <td>{{ item.market_name }}</td>
+                <td>{{ item.market_address }}</td>
+                <td>{{ item.market_contact }}</td>
+{% endblock %} 
+

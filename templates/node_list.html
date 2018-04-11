@@ -1,0 +1,22 @@
+{% extends "res_list.html" %}  
+{% block search %}  
+{% endblock %}  
+  
+{% block table_tr %}  
+  
+<th>机构名称</th>  
+<th>机构分类</th>  
+<th>成本中心</th>  
+<th>机构地址</th>  
+<th>联系人</th>  
+  
+  
+{% endblock %}  
+{% block table_td %}  
+<td>{{item.node_name}}</td>  
+<td>{{item.node_type}}</td>  
+<td>{{item.node_cost}}</td>  
+<td>{{item.node_address}}</td>  
+<td>{{item.node_contact}}</td>  
+  
+{% endblock %}  

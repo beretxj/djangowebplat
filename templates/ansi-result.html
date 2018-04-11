@@ -1,0 +1,15 @@
+<!--继承index.html-->
+{% extends "index.html" %}
+{% block page_css %}
+{% endblock %}
+<!--填充导航栏的页面名称-->
+{% block page_title %}
+    基础资料
+{% endblock %}
+{% load staticfiles %}
+<!--放置主页面内容-->
+{% block container %}
+<a href="/ansible/"><input class='btn btn-default' type='button' value='返回' /></a>
+<h4>The command result are:</h4>
+<textarea rows="20" cols="120">{{output}}</textarea>
+{% endblock %}

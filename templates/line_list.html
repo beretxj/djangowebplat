@@ -1,0 +1,27 @@
+{% extends "res_list.html" %}  
+{% block search %}  
+{% endblock %}  
+  
+{% block table_tr %}  
+    <th>线路编号</th>  
+   <th>用户名称</th>  
+   <th>本端地址</th>  
+   <th>对端地址</th>  
+   <th>运营商</th>  
+   <th>线路类型</th>  
+   <th>线路速率</th>  
+   <th>线路参数</th>  
+   <th>所在总头</th>  
+  
+{% endblock %}  
+{% block table_td %}  
+    <td>{{item.line_code}}</td>  
+   <td>{{item.node}}</td>  
+   <td>{{item.line_para1}}</td>  
+   <td>{{item.line_para2}}</td>  
+   <td>{{item.line_local}}</td>  
+   <td>{{item.line_speed}}</td>  
+   <td>{{item.line_speed}}</td>  
+   <td>{{item.para2}}</td>  
+   <td>{{item.para2}}</td>  
+{% endblock %}  

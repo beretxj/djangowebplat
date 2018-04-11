@@ -1,0 +1,19 @@
+{% extends "res_list.html" %}
+{% block search %}
+{% endblock %}
+
+{% block table_tr %}
+            <th>市场</th>
+            <th>会员编号</th>
+            <th>会员名称</th>
+            <th>会员地址</th>
+            <th>会员类型</th>
+{% endblock %}
+{% block table_td %}
+                <td>{{ item.market }}</td>
+                <td>{{ item.member_code }}</td>
+                <td>{{ item.member_name }}</td>
+                <td>{{ item.member_local }}</td>
+                <td>{{ item.member_type }}</td>
+{% endblock %}  
+
