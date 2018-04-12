@@ -229,7 +229,9 @@ def ansible(request):
             command = form.cleaned_data['command']
             os.environ['hosts'] = str(hosts)
             os.environ['command'] = str(command)
-            output = commands.getoutput("sh /ansi/$command $hosts")
+            outputstr = commands.getoutput("sh /ansi/$command $hosts")
+            output = []
+            output = outputstr.split("\n")
             context = {
                 'output': output,
             }
