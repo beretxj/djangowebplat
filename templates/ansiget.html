@@ -1,0 +1,55 @@
+<!--继承index.html-->
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+{% block page_css %}
+{% endblock %}
+<!--填充导航栏的页面名称-->
+{% block page_title %}
+    基础资料
+{% endblock %}
+{% load staticfiles %}
+<!--放置主页面内容-->
+{% block container %}
+    <div class="row">
+    <div class=class="col-xs-12">
+            <form class="navbar-for navbar-container" role="search" method="get" action="">{% csrf_token %}
+                <div class="col-sm-3">
+                         <div class="input-group">
+                             <span class="input-group-addon" id="host_id">主机</span>
+                             <select class="form-control" name="host_id">
+                                 <option value="">所有主机</option>
+                                 {% for itemhost in hostsdata%}
+                                 <option value="{{ itemhost }}" {% if request.GET.host_id and request.GET.host_id == "{{ itemhost }}"%} selected{% endif %}>{{ itemhost }}</option>
+                                 {% endfor %}
+                            </select>
+                             </div>
+                </div>
+                <div class="col-sm-3">
+                         <div class="input-group">
+                             <span class="input-group-addon" id="command_id">命令</span>
+                             <select class="form-control" name="command_id">
+                                 <option value="">所有命令</option>
+                                 {% for itemcommand in commanddata%}
+                                 <option value="{{ itemcommand }}" {% if request.GET.command_id and request.GET.command_id == "{{ itemcommand }}"%} selected{% endif %}>{{ itemcommand }}</option>
+                                 {% endfor %}
+                            </select>
+                             </div>
+                </div>
+                <div class="col-sm-3">
+                        <span class="input-group-btn">
+                           <button type="submit" class="btn btn-purple btn-sm">
+                                        查询
+                                        <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+                                    </button>
+                        </span>
+                </div>
+            </form>
+    </div>
+    </div>
+<fieldset>
+    <legend>检查结果：</legend>
+        <table style="white-space:pre">
+        <tr><td>{{ outputstr }}</td></tr>
+        </table>
+</fieldset>
+{% endblock %}

@@ -1,5 +1,35 @@
 {% extends "res_list.html" %}
 {% block search %}
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="member_code" >会员编号</span>
+                            <input type="text" class="form-control"  aria-describedby="member_code" name="member_code"
+                             {% if request.GET.member_code %}value = {{ request.GET.member_code }}{% endif %}      >
+                        </div>
+                     </div>
+
+                     <div class="col-sm-3">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="member_name">会员名称</span>
+                            <input type="text" class="form-control"  aria-describedby="member_name" name="member_name"
+                                     {% if request.GET.member_name %}value = {{ request.GET.member_name }}{% endif %}  >
+                        </div>
+                     </div>
+
+                     <div class="col-sm-3">
+                         <div class="input-group">
+                             <span class="input-group-addon" id="member_type">会员类型</span>
+                             <select class="form-control" name="member_type">
+                                 <option value="">所有类型</option>
+                                 <option value="经济类" {% if request.GET.member_type and request.GET.member_type == '经济类'%} selected{% endif %}>经济类</option>
+                                 <option value="综合类" {% if request.GET.member_type and request.GET.member_type == '综合类'%} selected{% endif %}>综合类</option>
+                                 <option value="结算类" {% if request.GET.member_type and request.GET.member_type == '结算类'%} selected{% endif %}>结算类</option>
+                                <option value="其他"  {% if request.GET.member_type and request.GET.member_type == '其他'%} selected{% endif %}>其他</option>
+
+                            </select>
+                             </div>
+                    </div>
+
 {% endblock %}
 
 {% block table_tr %}

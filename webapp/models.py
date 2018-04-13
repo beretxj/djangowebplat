@@ -139,3 +139,14 @@ class command(models.Model):
     command = models.CharField(max_length=32)
     def __unicode__(self):
         return self.command
+
+class T_Host(models.Model):
+    hostslie = models.CharField(max_length=32)
+    def __unicode__(self):
+        return self.hostslie
+
+
+class T_Command(models.Model):
+    commandlie = models.CharField(max_length=32)
+    def __unicode__(self):
+        return self.commandlie

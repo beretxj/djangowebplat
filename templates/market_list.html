@@ -1,5 +1,23 @@
 {% extends "res_list.html" %}
 {% block search %}
+    <div class="col-sm-3">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="market_name" >市场名称</span>
+                         <!-- 如果之前已经写入了node_name的信息，那么页面重新加载后保留-->
+                            <input type="text" class="form-control" placeholder="" aria-describedby="market_name" name="market_name"
+                                    {% if request.GET.market_name %}value = {{ request.GET.market_name }}{% endif %}>
+                        </div>
+                     </div>
+
+                     <div class="col-sm-3">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="market_address">市场地址</span>
+                            <input type="text" class="form-control" placeholder="" aria-describedby="market_address" name = "market_address"
+                                    {% if request.GET.market_address %}value = {{ request.GET.market_address }}{% endif %}>
+                        </div>
+                     </div>
+
+
 {% endblock %}
 
 {% block table_tr %}

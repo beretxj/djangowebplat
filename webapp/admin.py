@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Node, Line, Device, Market, member, hosts, command
+from .models import Node, Line, Device, Market, member, hosts, command, T_Host, T_Command
 # Register your models here.
 
 class NodeAdmin(admin.ModelAdmin):
@@ -36,3 +36,5 @@ admin.site.register(Market, MarketAdmin)
 admin.site.register(member)
 admin.site.register(hosts)
 admin.site.register(command)
+admin.site.register(T_Host)
+admin.site.register(T_Command)

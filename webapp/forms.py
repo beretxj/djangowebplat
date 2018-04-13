@@ -44,7 +44,7 @@ class AnsiForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(AnsiForm, self).__init__(*args, **kwargs)
 
-    hosts = forms.ModelChoiceField(
+    hosts_col = forms.ModelChoiceField(
         queryset = hosts.objects.all(),
         required = True,
         error_messages = {'required': "以下是必填项"},
@@ -55,7 +55,7 @@ class AnsiForm(forms.Form):
             }
         ),
     )
-    command = forms.ModelChoiceField(
+    command_col = forms.ModelChoiceField(
         queryset = command.objects.all(),
         required = True,
         error_messages = {'required': "以下是必填项"},

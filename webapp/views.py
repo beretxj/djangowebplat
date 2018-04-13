@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.template.loader import get_template
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from .forms import NodeForm, LineForm, DeviceForm, MarketForm, memberForm, AnsiForm
-from .models import Node, Line, Device, Market, member, hosts, command
+from .models import Node, Line, Device, Market, member, hosts, command, T_Host, T_Command
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -17,30 +17,50 @@ def index(request):
 
 def lists(request, table):
     if table == 'node':
-        data = Node.objects.all()
+        raw_data = Node.objects.all()
         list_template = 'node_list.html'
         sub_title = '节点信息'
         page_title = '基础信息'
     if table == 'line':
-        data = Line.objects.all()
+        raw_data = Line.objects.all()
         list_template = 'line_list.html'
         sub_title = '线路信息'
         page_title = '基础信息'
     if table == 'device':
-        data = Device.objects.all()
+        raw_data = Device.objects.all()
         list_template = 'device_list.html'
         sub_title = '设备信息'
         page_title = '基础信息'
     if table == 'market':
-        data = Market.objects.all()
+        raw_data = Market.objects.all()
         list_template = 'market_list.html'
         sub_title = '市场信息'
         page_title = '市场管理'
     if table == 'member':
-        data = member.objects.all()
+        raw_data = member.objects.all()
         list_template = 'member_list.html'
         sub_title = '会员信息'
         page_title = '市场管理'
+    if request.method == 'GET':
+        kwargs = {}
+        query = ''
+        for key, value in request.GET.iteritems():
+            if key != 'csrfmiddlewaretoken' and key != 'page':
+                #由于线路和设备的外键均与node表格有关，当查询线路中的用户名称或设备信息中的使用部门时，可以直接通过以下方式跨表进行查找
+                if key == 'node' or key == 'market':
+                    kwargs['node__node_name__contains'] = value
+                    #该query用于页面分页跳转时，能附带现有的搜索条件
+                    query += '&' + key + '=' + value
+                #其余的选项均通过key来辨别
+                else:
+                    kwargs[key + '__contains'] = value
+                    #该query用于页面分页跳转时，能附带现有的搜索条件
+                    query += '&' + key + '=' + value
+        #通过元始数据进行过滤，过滤条件为健对值的字典
+        data = raw_data.filter(**kwargs)
+    #如果没有从GET提交中获取信息，那么data则为元始数据
+    else:
+        data = raw_data
     data_list, page_range, count, page_nums = pagination(request, data)
     context = {
         'data': data_list,
@@ -50,6 +70,7 @@ def lists(request, table):
         'page_range': page_range,
         'count': count,
         'page_nums': page_nums,
+        'query': query,
     }
     return render(request,list_template,context)
 
@@ -225,11 +246,11 @@ def ansible(request):
     if request.method == 'POST':  # 当提交表单时
         form = AnsiForm(request.POST)  # form 包含提交的数据
         if form.is_valid():  # 如果提交的数据合法
-            hosts = form.cleaned_data['hosts']
-            command = form.cleaned_data['command']
-            os.environ['hosts'] = str(hosts)
-            os.environ['command'] = str(command)
-            outputstr = commands.getoutput("sh /ansi/$command $hosts")
+            hosts_in = form.cleaned_data['hosts_col']
+            command_in = form.cleaned_data['command_col']
+            os.environ['hosts_in'] = str(hosts_in)
+            os.environ['command_in'] = str(command_in)
+            outputstr = commands.getoutput("sh /ansi/$command_in $hosts_in")
             output = []
             output = outputstr.split("\n")
             context = {
@@ -239,3 +260,22 @@ def ansible(request):
     else:  # 当正常访问时
         form = AnsiForm()
     return render(request, 'ansible.html', {'form': form})
+
+
+def ansiget(request):
+    template = get_template('ansiget.html')
+    hostsdata = T_Host.objects.all()
+    commanddata = T_Command.objects.all()
+    try:
+        hosts_get = request.GET['host_id']
+        command_get = request.GET['command_id']
+        os.environ['hosts_get'] = str(hosts_get)
+        os.environ['command_get'] = str(command_get)
+        outputstr = commands.getoutput("sh /ansi/$command_get $hosts_get")
+        #output = []
+        #output = outputstr.split("\n")
+        html = template.render(locals())
+        return HttpResponse(html)
+    except:  # 当正常访问时
+        html = template.render(locals())
+    return HttpResponse(html)

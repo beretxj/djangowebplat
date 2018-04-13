@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', webapp.views.index),
     url(r'^ansible/', webapp.views.ansible),
+    url(r'^ansiget/', webapp.views.ansiget),
     url(r'^index/', webapp.views.index, name='index'),
     url(r'^lists/(?P<table>\w+)/$', webapp.views.lists, name='lists'),
     url(r'^add/(?P<table>\w+)/$', webapp.views.add, name='add'),
