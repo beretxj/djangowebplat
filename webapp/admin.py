@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import Node, Line, Device, Market, member, hosts, command, T_Host, T_Command
+from .models import Employee, Task, Process, Upload
 # Register your models here.
 
 class NodeAdmin(admin.ModelAdmin):
@@ -38,3 +39,7 @@ admin.site.register(hosts)
 admin.site.register(command)
 admin.site.register(T_Host)
 admin.site.register(T_Command)
+admin.site.register(Employee)
+admin.site.register(Task)
+admin.site.register(Process)
+admin.site.register(Upload)

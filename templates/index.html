@@ -78,7 +78,29 @@
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
                                 <!--如果用户已经登陆则显示注销选项，否则显示登录选项-->
+								{% if user.is_authenticated %}
+                                   <li>
+                        <a href="{% url 'logout' %}">
+                           <i class="ace-icon fa fa-power-off"></i>
+                           注销
+                        </a>
+                     </li>
+                                   {% else %}
+                     <li>
+                        <a href="{% url 'login'%}">
+                           <i class="ace-icon fa fa-user"></i>
+                           登录
+                        </a>
+                     </li>
+                               {% endif %}
 
+                               <li class="divider"></li>
+                               <li>
+                        <a href="{% url 'password_change' %}">
+                           <i class="ace-icon fa fa-cog"></i>
+                           更改密码
+                        </a>
+                     </li>
 
                                 <li class="divider"></li>
 
@@ -427,12 +449,32 @@
 					</li>
 
 					<li class="">
-						<a href="widgets.html">
+						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list-alt"></i>
-							<span class="menu-text"> Widgets </span>
+							<span class="menu-text"> 任务列表 </span>
+							<b class="arrow fa fa-angle-down"></b>
 						</a>
 
 						<b class="arrow"></b>
+						<ul class="submenu">
+							<li class="">
+								<a href="{% url 'task_list'%}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									设备管理
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="form-elements-2.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									事件管理
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+						</ul>
 					</li>
 					<li class="">
 						<a href="#" class="dropdown-toggle">
